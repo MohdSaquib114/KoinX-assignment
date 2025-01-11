@@ -1,10 +1,10 @@
 
-import Cryptocurrency  from'../models/cryptocurrency'
-import { stddev } 'mathjs'
+import Cryptocurrency  from'../models/cryptocurrency.js'
+import { std } from 'mathjs'
 
-const getDeviation = async (req, res) => {
+export const getDeviation = async (req, res) => {
   try {
-    const { coin } = req.query;
+    const { coin } =  req.body;
     const records = await Cryptocurrency.find({ coin })
       .sort({ timestamp: -1 })
       .limit(100);
@@ -14,7 +14,7 @@ const getDeviation = async (req, res) => {
     }
 
     const prices = records.map(record => record.price);
-    const deviation = stddev(prices);
+    const deviation = std(prices);
 
     return res.json({ deviation });
   } catch (error) {
@@ -23,4 +23,4 @@ const getDeviation = async (req, res) => {
   }
 };
 
-module.exports = { getDeviation };
+

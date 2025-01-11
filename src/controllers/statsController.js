@@ -1,8 +1,9 @@
-import  Cryptocurrency from'../models/cryptocurrency'
+import  Cryptocurrency from'../models/cryptocurrency.js'
 
-const getStats = async (req, res) => {
+export const getStats = async (req, res) => {
   try {
-    const { coin } = req.query;
+    const { coin } =  req.body;
+  
     const latestData = await Cryptocurrency.findOne({ coin }).sort({ timestamp: -1 });
     
     if (!latestData) {
@@ -20,4 +21,4 @@ const getStats = async (req, res) => {
   }
 };
 
-module.exports = { getStats };
+
